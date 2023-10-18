@@ -39,20 +39,20 @@ code to run a game.  This file is divided into three sections:
 To play your first game, type 'python pacman.py' from the command line.
 The keys are 'a', 's', 'd', and 'w' to move (or arrow keys).  Have fun!
 """
-from game import GameStateData
-from game import Game
-from game import Directions
-from game import Actions
-from util import nearestPoint
-from util import manhattanDistance
-import util, layout
-import sys, types, time, random, os
+from game import GameStateData # importra clasa GameStateData din fisierul game
+from game import Game # importa clasa Game din Game din fisierul game
+from game import Directions # importa clasa Directions din fisierul game
+from game import Actions # importa clasa Actions din fisierul game
+from util import nearestPoint # importa clasa nearestPoint din fisierul util
+from util import manhattanDistance # importa clasa manhattanDistance dun fisierul util
+import util, layout # importa fisierele
+import sys, types, time, random, os # importa biblioteci, i guess :))
 
 ###################################################
 # YOUR INTERFACE TO THE PACMAN WORLD: A GameState #
 ###################################################
 
-class GameState:
+class GameState: # se incepe o noua clasa
     """
     A GameState specifies the full game state, including the food, capsules,
     agent configurations and score changes.
@@ -72,18 +72,24 @@ class GameState:
     ####################################################
 
     # static variable keeps track of which states have had getLegalActions called
-    explored = set()
-    def getAndResetExplored():
-        tmp = GameState.explored.copy()
-        GameState.explored = set()
-        return tmp
-    getAndResetExplored = staticmethod(getAndResetExplored)
+    explored = set() #creaza un set nou, pentru a urmari ce elemente vor fi explorate in joc
+    def getAndResetExplored(): #se defineste o metoda din clasa GameState
+        tmp = GameState.explored.copy() # tmp = variabila globala; tmp are rolil de a primi o copie a setului explored, fara a modifica setul initial
+        GameState.explored = set() # dupa copierea setului initial, se creaza un set nou :??
+        return tmp # se returneaza copia setului explored, tmp, care contine toate datele initiale
+    getAndResetExplored = staticmethod(getAndResetExplored) # aceasta linie face ca metoda aceasta sa fie una statica, pentru a fi mai usor sa apelam metoda fara a se crea o instanta a clasei
 
-    def getLegalActions( self, agentIndex=0 ):
+    def getLegalActions( self, agentIndex=0 ): # se defineste o metoda cu doi paramatreri
         """
         Returns the legal actions for the agent specified.
         """
 #        GameState.explored.add(self)
+        if self.isWin() or self.isLose(): return [] # cred ca se face verificarea daca suntem in cazul de win sau lose si daca este unul dintre aceste cazuri, se returneaza o lista goala de actiuni reprezentand actiunile care ne mai sunt disponibile ( in teorie niciuna )
+
+        if agentIndex == 0:  # Pacman is moving # daca pacman se misca :))
+            return PacmanRules.getLegalActions( self ) # se returneaza o lista cu posibilele actiuni pe care pacman le poate realiza in pozitia in care se afla
+        else: # agentIndex == 1, o fantomita face ceva miscari ????
+            return GhostRules.getLegalActions( self, agentIndex ) # se returneaza o lista cu posibilele actiuni in starea aceasta ???
         if self.isWin() or self.isLose(): return [] #If the game if over there are no actions left
         #According to the type of the agent a method that determines the next possible moves is called
         if agentIndex == 0:  # Pacman is moving
