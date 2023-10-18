@@ -84,8 +84,8 @@ class GameState:
         Returns the legal actions for the agent specified.
         """
 #        GameState.explored.add(self)
-        if self.isWin() or self.isLose(): return []
-
+        if self.isWin() or self.isLose(): return [] #If the game if over there are no actions left
+        #According to the type of the agent a method that determines the next possible moves is called
         if agentIndex == 0:  # Pacman is moving
             return PacmanRules.getLegalActions( self )
         else:

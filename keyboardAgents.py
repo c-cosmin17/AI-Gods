@@ -21,7 +21,7 @@ class KeyboardAgent(Agent):
     An agent controlled by the keyboard.
     """
     # NOTE: Arrow keys also work.
-    WEST_KEY  = 'a'
+    WEST_KEY  = 'a' #These represent the possible moves a player can make
     EAST_KEY  = 'd'
     NORTH_KEY = 'w'
     SOUTH_KEY = 's'
@@ -36,7 +36,7 @@ class KeyboardAgent(Agent):
     def getAction( self, state):
         from graphicsUtils import keys_waiting
         from graphicsUtils import keys_pressed
-        keys = list(keys_waiting()) + list(keys_pressed())
+        keys = list(keys_waiting()) + list(keys_pressed()) # This is a list that holds the keys actioned on the keyboard
         if keys != []:
             self.keys = keys
 

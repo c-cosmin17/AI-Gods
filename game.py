@@ -66,7 +66,7 @@ class Directions:
                EAST: WEST,
                WEST: EAST,
                STOP: STOP}
-
+#This is the way you declare a class
 class Configuration:
     """
     A Configuration holds the (x,y) coordinate of a character, along with its
@@ -75,26 +75,27 @@ class Configuration:
     The convention for positions, like a graph, is that (0,0) is the lower left corner, x increases
     horizontally and y increases vertically.  Therefore, north is the direction of increasing y, or (0,1).
     """
-
+    #This is the constructor of the class
     def __init__(self, pos, direction):
-        self.pos = pos
-        self.direction = direction
+        #These are the instance variables of the class
+        self.pos = pos  #this represents the position of the agent
+        self.direction = direction #this represents the direction of the agent
 
-    def getPosition(self):
+    def getPosition(self): #This is a method that allows you to access the position of the agent
         return (self.pos)
 
-    def getDirection(self):
+    def getDirection(self): #This is a method that allows you to access the direction of the agent
         return self.direction
 
     def isInteger(self):
         x,y = self.pos
         return x == int(x) and y == int(y)
 
-    def __eq__(self, other):
+    def __eq__(self, other):    #This is a method that tests if two instances of this class are equal
         if other == None: return False
         return (self.pos == other.pos and self.direction == other.direction)
 
-    def __hash__(self):
+    def __hash__(self): #This is a method that generates the hashcode of an instance of this class
         x = hash(self.pos)
         y = hash(self.direction)
         return hash(x + 13 * y)
@@ -121,11 +122,11 @@ class AgentState:
     """
     AgentStates hold the state of an agent (configuration, speed, scared, etc).
     """
-
+    "The constructor"
     def __init__( self, startConfiguration, isPacman ):
         self.start = startConfiguration
         self.configuration = startConfiguration
-        self.isPacman = isPacman
+        self.isPacman = isPacman #Establish if the instance is a ghost or pacman
         self.scaredTimer = 0
         self.numCarrying = 0
         self.numReturned = 0
@@ -152,11 +153,11 @@ class AgentState:
         state.numReturned = self.numReturned
         return state
 
-    def getPosition(self):
+    def getPosition(self): # returns the position of the agent
         if self.configuration == None: return None
         return self.configuration.getPosition()
 
-    def getDirection(self):
+    def getDirection(self): # returns the direction of the agent
         return self.configuration.getDirection()
 
 class Grid:
@@ -610,7 +611,6 @@ class Game:
 
         agentIndex = self.startingIndex
         numAgents = len( self.agents )
-
         while not self.gameOver:
             # Fetch the next agent
             agent = self.agents[agentIndex]

@@ -20,7 +20,7 @@ import util
 
 class LeftTurnAgent(game.Agent):
     "An agent that turns left at every opportunity"
-
+    
     def getAction(self, state):
         legal = state.getLegalPacmanActions()
         current = state.getPacmanState().configuration.direction
@@ -47,6 +47,6 @@ class GreedyAgent(Agent):
         bestScore = max(scored)[0]
         bestActions = [pair[1] for pair in scored if pair[0] == bestScore]
         return random.choice(bestActions)
-
+#A method that returns the score of pacman
 def scoreEvaluation(state):
     return state.getScore()

@@ -18,10 +18,11 @@ from game import Directions
 import random
 from util import manhattanDistance
 import util
-
+#A class that generalizes the Agent superclass
 class GhostAgent( Agent ):
+    #The constructor of the class
     def __init__( self, index ):
-        self.index = index
+        self.index = index #Sets the ID of the ghost
 
     def getAction( self, state ):
         dist = self.getDistribution(state)
