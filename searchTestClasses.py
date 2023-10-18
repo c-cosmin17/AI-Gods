@@ -12,51 +12,51 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
-import sys
-import re
-import testClasses
-import textwrap
+import sys          # importam o librarie
+import re           # importam o librarie
+import testClasses  # importam o librarie
+import textwrap     # importam o librarie
 
 # import project specific code
-import layout
-import pacman
-from search import SearchProblem
+import layout                    # importam o librarie
+import pacman                    # importam o librarie
+from search import SearchProblem # importam o clasa
 
 # helper function for printing solutions in solution files
-def wrap_solution(solution):
-    if type(solution) == type([]):
-        return '\n'.join(textwrap.wrap(' '.join(solution)))
+def wrap_solution(solution):             # definim o functie numita wrap_solution cu 1 parametru : solution
+    if type(solution) == type([]):       # verificam daca solutia e ok, gen sa fie ceva acolo in ea
+        return '\n'.join(textwrap.wrap(' '.join(solution))) # new line, daca solutia este "goala"
     else:
-        return str(solution)
+        return str(solution)             # facem un string  din solutie
 
 
 
 
-def followAction(state, action, problem):
-  for child1, action1, cost1 in problem.expand(state):
-    if action == action1: return child1
-  return None
+def followAction(state, action, problem):   # definim o functie numita followAction cu 3 parametrii : state, action si problem
+  for child1, action1, cost1 in problem.expand(state): # for loop
+    if action == action1: return child1     # actiunea curenta cu urmatoarea ?
+  return None                               # echivalent cu return null
 
-def followPath(path, problem):
-  state = problem.getStartState()
-  states = [state]
-  for action in path:
-    state = followAction(state, action, problem)
-    states.append(state)
-  return states
+def followPath(path, problem):      # definim o functie numita followPath cu 2 parametrii : path si problem
+  state = problem.getStartState()   # salvam in variablia state starea curenta
+  states = [state]                  # definim states ca o lista de stari
+  for action in path:               # for loop
+    state = followAction(state, action, problem) # apelam followAction cu starea curenta, componenta action din path si problem
+    states.append(state)            # adaugam starea curenta in lista de stari
+  return states                     # returnam lista
 
-def checkSolution(problem, path):
-  state = problem.getStartState()
-  for action in path:
-    state = followAction(state, action, problem)
-  return problem.isGoalState(state)
+def checkSolution(problem, path):   # definim o functie numita checkSolution cu 2 parametrii : problem si path
+  state = problem.getStartState()   # salvam in state starea initiala
+  for action in path:               # for loop
+    state = followAction(state, action, problem) # ??
+  return problem.isGoalState(state) # ??
 
 # Search problem on a plain graph
-class GraphSearch(SearchProblem):
+class GraphSearch(SearchProblem):   # definim clasa GraphSearch care extinde clasa SearchProblem
 
     # Read in the state graph; define start/end states, edges and costs
-    def __init__(self, graph_text):
-        self.expanded_states = []
+    def __init__(self, graph_text):  # definim o functie de initializare
+        self.expanded_states = []    # initializam cu lista goala
         lines = graph_text.split('\n')
         r = re.match('start_state:(.*)', lines[0])
         if r == None:
@@ -91,13 +91,13 @@ class GraphSearch(SearchProblem):
             if start not in self.children:
                 self.children[start] = []
             self.children[start].append((next_state, action, cost))
-        for s in all_states:
-            if s not in self.children:
-                self.children[s] = []
+        for s in all_states:           # loop
+            if s not in self.children: # 
+                self.children[s] = []  #
 
     # Get start state
-    def getStartState(self):
-        return self.start_state
+    def getStartState(self):     # definit o functie
+        return self.start_state  # returnam starea initiala
 
     # Check if a state is a goal state
     def isGoalState(self, state):
