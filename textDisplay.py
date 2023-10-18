@@ -24,7 +24,7 @@ DISPLAY_MOVES = False
 QUIET = False # Supresses output
 
 class NullGraphics:
-    def initialize(self, state, isBlue = False):
+    def initialize(self, state, isBlue = False): 
         pass
 
     def update(self, state):

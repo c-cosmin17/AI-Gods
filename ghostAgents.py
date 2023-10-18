@@ -39,23 +39,17 @@ class GhostAgent( Agent ):
         else: #daca nu este preluata o noua directie 
             return util.chooseFromDistribution( dist )
 
-    def getDistribution(self, state): #este suprascrisa in clasele copii
+    def getDistribution(self, state): #returneaza nr de actiuni pt acel state???? idk #este suprascrisa in clasele copii
         "Returns a Counter encoding a distribution over actions from the provided state."
         util.raiseNotDefined()
 
+class RandomGhost( GhostAgent ): #clasa pt fantomita random e o subclasa a lui GhostAgent
 
-#o clasa definita, care mosteneste clasa GhostAgent 
-class RandomGhost( GhostAgent ):
-    "A ghost that chooses a legal action uniformly at random."
-   #suprascriere a metodei din clasa parinte 
-    def getDistribution( self, state ):
-        #aici se face ceva algoritm de alegere a unei noi distributii
-        #cu o probabilitate cat mai uniforma
-        dist = util.Counter()
-        for a in state.getLegalActions( self.index ): dist[a] = 1.0
-        dist.normalize()
-        return dist
-    
+    def getDistribution( self, state ): #functia returneaza o actinue legala pe care o poate face fantomita???
+        dist = util.Counter() #un obiect gol pt distributia de actiuni??
+        for a in state.getLegalActions( self.index ): dist[a] = 1.0 #trece prin fiecare actiune si seteapa probabilitatea de alegere cu 1
+        dist.normalize()#???
+        return dist #returneaza dist
 
 #o alta clasa care mosteneste clasa GhostAgent
 class DirectionalGhost( GhostAgent ):

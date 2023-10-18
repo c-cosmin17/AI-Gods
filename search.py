@@ -27,13 +27,13 @@ class SearchProblem:
     You do not need to change anything in this class, ever.
     """
 
-    def getStartState(self):
+    def getStartState(self): #functia returneaza start state ul pt problema
         """
         Returns the start state for the search problem.
         """
         util.raiseNotDefined()
 
-    def isGoalState(self, state):
+    def isGoalState(self, state): #functia returneaza true daca state ul este valid
         """
           state: Search state
 
@@ -52,7 +52,7 @@ class SearchProblem:
         """
         util.raiseNotDefined()
 
-    def getActions(self, state):
+    def getActions(self, state): # returneaza l lista de actiuni
         """
           state: Search state
 
