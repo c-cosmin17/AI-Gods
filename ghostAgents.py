@@ -18,31 +18,46 @@ from game import Directions
 import random
 from util import manhattanDistance
 import util
+
+#definire clasa care mosteneste clasa parinte Agent
 #A class that generalizes the Agent superclass
+
 class GhostAgent( Agent ):
+    #constructor in care se initializeaza o variabila de instanta 
+    #variabila este specifica fiecarui obiect instantiat
+
     #The constructor of the class
     def __init__( self, index ):
         self.index = index #Sets the ID of the ghost
 
+    #definire metoda pentru stabilirea actiunii pe care trebuie sa o faca packman-ul 
     def getAction( self, state ):
+        #apel metoda, pe obiectul instantiat pentru a prelua starea in care se afla 
         dist = self.getDistribution(state)
-        if len(dist) == 0:
+        if len(dist) == 0: #daca lungimea este zero atunci este caz de oprire
             return Directions.STOP
-        else:
+        else: #daca nu este preluata o noua directie 
             return util.chooseFromDistribution( dist )
 
-    def getDistribution(self, state):
+    def getDistribution(self, state): #este suprascrisa in clasele copii
         "Returns a Counter encoding a distribution over actions from the provided state."
         util.raiseNotDefined()
 
+
+#o clasa definita, care mosteneste clasa GhostAgent 
 class RandomGhost( GhostAgent ):
     "A ghost that chooses a legal action uniformly at random."
+   #suprascriere a metodei din clasa parinte 
     def getDistribution( self, state ):
+        #aici se face ceva algoritm de alegere a unei noi distributii
+        #cu o probabilitate cat mai uniforma
         dist = util.Counter()
         for a in state.getLegalActions( self.index ): dist[a] = 1.0
         dist.normalize()
         return dist
+    
 
+#o alta clasa care mosteneste clasa GhostAgent
 class DirectionalGhost( GhostAgent ):
     "A ghost that prefers to rush Pacman, or flee when scared."
     def __init__( self, index, prob_attack=0.8, prob_scaredFlee=0.8 ):
