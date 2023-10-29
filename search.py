@@ -131,6 +131,30 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
+    source = problem.getStartState() # accesam nodul sursa
+    if problem.isGoalState(source): # verificam daca nodul sursa este si destinatie
+        return []
+
+    reached = []    # o lista pentru nodurile pe care le-am expandat pana in prezent
+
+    frontier = util.PriorityQueue() # o lista de prioritate pentru nodurile pe care trebuie sa le procesam
+    frontier.push((source, [], 0), 0) # initializam frontiera cu nodul sursa
+
+    while not frontier.isEmpty(): # cat timp mai sunt noduri de procesat
+
+        current_node, actions, current_cost = frontier.pop() # procesam nodul cu costul cel mai mic
+
+        if current_node not in reached: # daca nodul nu a fost expandat pana acum il expandam
+            reached.append(current_node) 
+
+            if problem.isGoalState(current_node): #verificam daca reprezinta nodul destinatie
+                return actions # returnam lista de actiuni pentru a ajunge din sursa in destinatie
+
+            for child, action, cost in problem.expand(current_node): # pentru fiecare copil al nodului
+                child_action = actions + [action] # actualizam actiunile
+                child_cost = current_cost + cost    # actualizam costul pentru a ajunge din sursa in nodul copil
+                total_cost = child_cost + heuristic(child,problem) # actualizam costul total cu tot cu functie heuristica
+                frontier.push((child, child_action, child_cost),total_cost) # introducem nodul copil in frontiera pentru a fi expandat
     util.raiseNotDefined()
 
 
