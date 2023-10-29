@@ -114,6 +114,30 @@ def depthFirstSearch(problem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
+    nodesToBeExplored = util.Stack() #stiva pentru nodurile pe care trebuie sa le exploram
+    visited = [] #lista pentru a tine evidenta starilor vizitate
+    initial_state = problem.getStartState() #starea initiala
+    nodesToBeExplored.push((initial_state,[])) #punem pe stiva starea initiala si o lista goala de actiuni
+
+    #exploram pana cand stiva este goala
+    while (nodesToBeExplored.isEmpty() != True):
+
+        current, actionsToDo = nodesToBeExplored.pop() #starea curenta si actiunile ei
+
+        #verificare daca starea curenta este starea scop si daca da return la actiunile ei
+        if(problem.isGoalState(current)):
+            return actionsToDo
+        
+        #daca starea nu e scop si nu a fost vizitata
+        if(current not in visited):
+
+            visited.append(current) #o vizitam
+            nodes = problem.expand(current) #expandam pentru a obtine starile urmatoare
+
+            for next,action,_ in nodes:
+                new_actionsToDo = actionsToDo + [action]
+                nodesToBeExplored.push((next,new_actionsToDo))#introducem urmatoarea stare si noua lista de actiuni in stiva pentru a fi explorata
+    
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
