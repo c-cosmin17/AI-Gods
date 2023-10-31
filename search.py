@@ -141,9 +141,30 @@ def depthFirstSearch(problem):
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
-    """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+nodesToBeExplored = util.Queue() # coada pentru nodurile pe care trebuie explorate
+visited = set()  # crearea unui set in care o sa punem elemente neordonate unice care au fost vizitate in timpul algoritmului
+
+initial_state = problem.getStartState() # starea initiala a algoritmului
+nodesToBeExplored.push((initial_state, [])) # punem in coada starea initiala si o lista de actiuni
+
+    # se cauta alt nod pana cand se ajunge la sfarsitul cozii
+while (nodesToBeExplored.isEmpty() == False):
+
+    current, actionsToDo = nodesToBeExplored.pop() # current primeste nodul din coada iar actionsToDo primeste lista cu actiuni de facut din punctul respectiv 
+
+    if problem.isGoalState(current): # verificam daca am ajuns in punctul final iar daca nu returnam o lista cu actiuni care reprezinta cheia spre solutie
+        return actionsToDo
+
+    if current not in visited: # verifica daca nodul curent nu este in setul deja vizitat
+        visited.add(current) # marchezi nodul ca si vizitat
+        nodes = problem.expand(current) # cauti copiii parintelui, expandandu-l
+
+        for next_state, action, _ in nodes: # parcurgi drumurile obtinute in urma expandarii 
+            new_actionsToDo = actionsToDo + [action] # adaugi in lista de actiuni actiunile corespunzatoare ale fiecarui nod
+            nodesToBeExplored.push((next_state, new_actionsToDo)) # adaugi in coada nodurile copii si actiunile din acestea
+
+util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
     """

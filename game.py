@@ -46,20 +46,20 @@ class Agent:
         """
         raiseNotDefined()
 
-class Directions:
-    NORTH = 'North'
-    SOUTH = 'South'
-    EAST = 'East'
-    WEST = 'West'
-    STOP = 'Stop'
+class Directions:   #The class Directions provides a way to represent and manipulate cardinal directions related to actions
+    NORTH = 'North' #Variable that holds a string value that represents the north cardinal directions
+    SOUTH = 'South' #Variable that holds a string value that represents the south cardinal directions
+    EAST = 'East'   #Variable that holds a string value that represents the east cardinal directions
+    WEST = 'West'   #Variable that holds a string value that represents the west cardinal directions
+    STOP = 'Stop'   #Variable that holds a string value that represents the stop action
 
-    LEFT =       {NORTH: WEST,
+    LEFT =       {NORTH: WEST,  #Each cardinal direction along with the stop action is mapped corresponding to their direction when turned left
                    SOUTH: EAST,
                    EAST:  NORTH,
                    WEST:  SOUTH,
                    STOP:  STOP}
 
-    RIGHT =      dict([(y,x) for x, y in LEFT.items()])
+    RIGHT =      dict([(y,x) for x, y in LEFT.items()]) 
 
     REVERSE = {NORTH: SOUTH,
                SOUTH: NORTH,
