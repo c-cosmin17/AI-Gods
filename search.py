@@ -202,8 +202,36 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                 frontier.push((child, child_action, child_cost),total_cost) # introducem nodul copil in frontiera pentru a fi expandat
     util.raiseNotDefined()
 
+def uniformCostSearch(problem):
+    pQueue = util.PriorityQueue() #o lista de prioritate pt noduri
+    exploredNodes = set() #o lista pt nodurile deja expandate
+    startState = problem.getStartState()#nodul sursa
+    startNode = (startState, [], 0) 
+    
+    pQueue.push(startNode, 0)#initializam frontiera cu nodul sursa
+
+    while not pQueue.isEmpty(): #cat timp mai avem noduri de procesat
+        currentState, actions, cost = pQueue.pop()#procesam nodul cu costul cel mai mic
+        
+        if currentState not in exploredNodes:#daca nodul curent nu este in lista nodurilor expandate il punem acum
+            exploredNodes.add(currentState)
+
+            if problem.isGoalState(currentState):#daca nodul este nodul destinatie
+                return actions#returnam lista de actiuni pt a ajunge de la nodul sursa la cel destinatie
+            
+            for succState, succAction, succCost in problem.expand(currentState): #pt fiecare succesor al nodului
+                newAction = actions + [succAction]#se actualizeaza actiunea/ 
+                newCost = cost + succCost#se actualizeaza costul
+                newNode = (succState, newAction, newCost)#cream un nod nou cu aceste atributii
+                pQueue.push(newNode, newCost)# intoducem nodul in frontiera pt a fi expandat
+
+
+    return actions
+
+   # util.raiseNotDefined()
 
 # Abbreviations
 bfs = breadthFirstSearch
 dfs = depthFirstSearch
 astar = aStarSearch
+ucs = uniformCostSearch
